@@ -1,0 +1,29 @@
+{
+  "name": "keybox",
+  "version": "0.0.1",
+  "description": "A password manager in node.js",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "keybox": "./bin/keybox.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yinso/keybox.git"
+  },
+  "keywords": [
+    "password",
+    "management"
+  ],
+  "author": "",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/yinso/keybox/issues"
+  },
+  "homepage": "https://github.com/yinso/keybox#readme",
+  "dependencies": {
+    "yargs": "^4.1.0"
+  }
+}
