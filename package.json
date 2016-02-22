@@ -4,7 +4,7 @@
   "description": "A password manager in node.js",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register --recursive"
   },
   "bin": {
     "keybox": "./bin/keybox.js"
@@ -25,5 +25,10 @@
   "homepage": "https://github.com/yinso/keybox#readme",
   "dependencies": {
     "yargs": "^4.1.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coffee-script": "^1.10.0",
+    "mocha": "^2.4.5"
   }
 }
