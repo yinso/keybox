@@ -7,10 +7,11 @@ Promise = require 'bluebird'
 
 class Storage
   @initialize: (path, cb) ->
-    DBI.setup 'storage',
-      type: 'sqlite'
-      options:
-        filePath: path
+    if not DBI.hasSetup 'storage'
+      DBI.setup 'storage',
+        type: 'sqlite'
+        options:
+          filePath: path
     DBI.connect 'storage', (err, conn) ->
       if err
         cb err
