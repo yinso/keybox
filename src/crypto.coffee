@@ -8,6 +8,9 @@ class Crypto
   @decrypt: (type, password, encrypted, cb) ->
     c = new Crypto()
     c.decrypt password, encrypted, cb
+  @createKey: (type, password, salt, cb) ->
+    c = new Crypto()
+    c.createKey type, password, salt, cb
   constructor: (options = {}) ->
     if not (@ instanceof Crypto)
       return new Crypto(options)
