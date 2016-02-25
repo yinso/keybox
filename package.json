@@ -28,7 +28,8 @@
     "bluebird": "^3.3.1",
     "easydbi": "^0.2.4",
     "easydbi-sqlite": "^0.1.0",
-    "yargs": "^4.1.0"
+    "yargs": "^4.1.0",
+    "zxcvbn": "^4.2.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

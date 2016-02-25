@@ -27,3 +27,8 @@ describe 'password test', ->
         console.log 'master.key', res
         done null
 
+  it 'can estimate password entropy', (done) ->
+    res = Password.entropy pass
+    console.log 'password entropy', res
+    done null
+

@@ -1,6 +1,7 @@
 bcrypt = require 'bcrypt'
 Promise = require 'bluebird'
 Crypto = require './crypto'
+zxcvbn = require 'zxcvbn'
 
 class Password
   @iteration: 12
@@ -18,6 +19,8 @@ class Password
         cb err
       else
         Crypto.createKey type, password, hash, cb
+  @entropy: (password) ->
+    zxcvbn password
 
 Promise.promisifyAll Password.prototype
 
