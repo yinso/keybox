@@ -47,21 +47,21 @@ describe 'storage test', ->
         done null
 
   it 'can set via user', (done) ->
-    user.set 'test-key', { hello: 'world' }, done
+    user.set key, val, done
 
   it 'can get via user', (done) ->
-    user.get 'test-key', (err, res) ->
+    user.get key, (err, res) ->
       if err
         done err
       else
         try
-          assert.deepEqual res, { hello: 'world' }
+          assert.deepEqual res, val
           done null
         catch e
           done e
  
   it 'can delete via user', (done) ->
-    user.delete 'test-key', done
+    user.delete key, done
 
   it 'can close storage', (done) ->
     storage.close done
