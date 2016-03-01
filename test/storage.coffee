@@ -14,54 +14,19 @@ describe 'storage test', ->
       else
         storage = res
         done null
-  user_id = 0
   key = 'test-key'
   val = { foo: 1, bar: 2, stuff: [1, 2, 3] }
 
   it 'can storage key/object', (done) ->
-    storage.set user_id, key, val, done
+    storage.set key, val, done
 
   it 'can retrieve value', (done) ->
-    storage.get user_id, key, (err, res) ->
+    storage.get key, (err, res) ->
       if err
         done err
       else
         assert.deepEqual res, val
         done null
-
-  it 'can delete key', (done) ->
-    storage.delete user_id, key, (err, res) ->
-      if err
-        done err
-      else
-        done null
-
-  user = null
-
-  it 'can create user', (done) ->
-    storage.createUser 'test1', 'this is a test', (err, res) ->
-      if err
-        done err
-      else
-        user = res
-        done null
-
-  it 'can set via user', (done) ->
-    user.set key, val, done
-
-  it 'can get via user', (done) ->
-    user.get key, (err, res) ->
-      if err
-        done err
-      else
-        try
-          assert.deepEqual res, val
-          done null
-        catch e
-          done e
- 
-  it 'can delete via user', (done) ->
-    user.delete key, done
 
   it 'can close storage', (done) ->
     storage.close done

@@ -4,11 +4,8 @@ Crypto = require '../src/crypto'
 describe 'crypto test', ->
 
   crypto = null
-
-  it 'can create crypto', (done) ->
+  it 'can create crypto', ->
     crypto = Crypto()
-    done null
-
   password = 'this is a password'
   data =
     foo: 1
@@ -37,7 +34,7 @@ describe 'crypto test', ->
         catch e
           done e
 
-  it 'can encrypt and decrypt', (done) ->
+  it 'can encrypt and decrypt', ->
     
     Crypto.encrypt 'aes256', password, data, (err, encrypted) ->
       if err

@@ -22,7 +22,7 @@ class Password
   @entropy: (password) ->
     zxcvbn password
 
-Promise.promisifyAll Password
+Promise.promisifyAll Password.prototype
 
 module.exports = Password
 
