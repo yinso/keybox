@@ -23,6 +23,7 @@ class Password
     zxcvbn password
 
 Promise.promisifyAll Password.prototype
+Promise.promisifyAll Password
 
 module.exports = Password
 

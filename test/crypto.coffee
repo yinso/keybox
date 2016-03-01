@@ -34,13 +34,13 @@ describe 'crypto test', ->
         catch e
           done e
 
-  it 'can encrypt and decrypt', ->
+  it 'can encrypt and decrypt', (done) ->
     
     Crypto.encrypt 'aes256', password, data, (err, encrypted) ->
       if err
         done err
       else
-        Crypto.decrypt 'aes256', password, encrypted, (err, decrypted) ->
+        Crypto.decrypt password, encrypted, (err, decrypted) ->
           if err
             done err
           else
@@ -49,4 +49,12 @@ describe 'crypto test', ->
               done null
             catch e
               done e
+
+  it 'can hash', (done) ->
+    Crypto.hash 'sha256', 'password:' + password, (err, hash) ->
+      if err
+        done err
+      else
+        console.log 'hash', hash
+        done null
 

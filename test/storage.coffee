@@ -28,6 +28,9 @@ describe 'storage test', ->
         assert.deepEqual res, val
         done null
 
+  it 'can delete key', (done) ->
+    storage.delete key, done
+
   it 'can close storage', (done) ->
     storage.close done
 

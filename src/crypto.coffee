@@ -2,10 +2,19 @@ crypto = require 'crypto'
 Promise = require 'bluebird'
 
 class Crypto
+  @hash: (type, key, cb) ->
+    hash = crypto.createHash type
+    buffer = []
+    hash.on 'readable', ->
+      data = hash.read()
+      if data
+        cb null, data.toString('hex')
+    hash.write key
+    hash.end()
   @encrypt: (type, password, data, cb) ->
     c = new Crypto()
     c.encrypt type, password, data, cb
-  @decrypt: (type, password, encrypted, cb) ->
+  @decrypt: (password, encrypted, cb) ->
     c = new Crypto()
     c.decrypt password, encrypted, cb
   @createKey: (type, password, salt, cb) ->
