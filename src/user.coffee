@@ -23,11 +23,13 @@ class User
         cb err
       else
         cb null, buffer.toString 'hex'
+  @encryptKey: (username, hash) ->
+    'user:' + username + ',' + hash
   @deserialize: (serialized, username, password, cb) ->
     @deriveHashAsync password, username
       .then (hash) ->
         console.log 'User.deserialize:HASH', hash
-        key = 'user:' + username + ',' + hash
+        key = User.encryptKey username, hash
         Crypto.decryptAsync(key, serialized)
       .then (res) ->
         cb null, User(JSON.parse res)
@@ -68,7 +70,7 @@ class User
   serialize: (cb) ->
     # we will assume the hash already exists in the system...
     console.log 'User.serialize:HASH', @hash
-    password = 'user:' + @username + ',' + @hash
+    password = User.encryptKey @username, @hash
     data = JSON.stringify 
       username: @username
       hash: @hash
