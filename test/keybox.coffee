@@ -20,15 +20,39 @@ describe 'keybox test', ->
   user = null
 
   it 'can create user', (done) ->
-    keybox.createUser { username: username, email: email, password: password }, (err, val) ->
+    keybox.createUser username, password, { email: email }, (err, val) ->
       if err
         done err
       else
         user = val
         done null
 
-  
-  
+  it 'can login', (done) ->
+    keybox.login username, password, (err, val) ->
+      if err
+        done err
+      else
+        user = val
+        done null
+
+  newPassword = 'this is the new password try it'
+
+  it 'can change password', (done) ->
+    keybox.changePasswordAsync username, password, newPassword, newPassword
+      .then ->
+        keybox.loginAsync username, password
+          .then ->
+            throw new Error("old password still works!")
+          .catch (err) ->
+            return
+      .then ->
+        keybox.loginAsync username, newPassword
+      .then ->
+        user = keybox.currentUser
+        done null
+      .catch done
+    
+
   it 'can remove file', (done) ->
     fs.unlink filePath, done
 

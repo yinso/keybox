@@ -11,6 +11,14 @@ class User
   @prefix: 'user:'
   @encType: 'aes256'
   @hashType: 'sha256'
+  @deriveKey: (username, password, cb) ->
+    console.log 'User.deriveKey', username, password
+    Crypto.createKey @encType, @prefix + username + password, username, (err, buffer) ->
+      console.log 'User.deriveKey', username, password, err, buffer
+      if err
+        cb err
+      else
+        cb null, buffer.toString 'hex'
   @deriveHash: (password, salt, cb) ->
     Crypto.createKey @encType, password, salt, (err, buffer) ->
       if err
@@ -33,12 +41,30 @@ class User
     console.log 'User.ctor', options
     for key, val of options
       @[key] = val
-  setPassword: (password, cb) ->
+  initPassword: (password, cb) ->
     self = @
+    if self.hasOwnProperty('hash')
+      return cb new Error("User.initPassword:alreadyInited")
     User.deriveHashAsync password, @username
       .then (hash) ->
         self.hash = hash
         console.log 'User.setPassword', password, hash
+        cb null
+      .catch cb
+  changePassword: (password, newPassword, confirm, cb) ->
+    self = @
+    if password == newPassword
+      return cb new Error("User.changePassword:samePassword")
+    if newPassword != confirm
+      return cb new Error("User.changePassword:newPasswordNotMatch")
+    User.deriveHashAsync password, self.username
+      .then (hash) ->
+        if self.hash == hash
+          User.deriveHashAsync newPassword, self.username
+        else
+          throw new Error("User.changePassword:incorrectPassword")
+      .then (hash) ->
+        self.hash = hash
         cb null
       .catch cb
   serializeKey: (cb) ->

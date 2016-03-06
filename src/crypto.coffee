@@ -55,6 +55,7 @@ class Crypto
     crypto.randomBytes @saltSize, cb
   createKey: (type, password, salt, cb) ->
     try
+      sat = if salt instanceof Buffer then salt else new Buffer(salt)
       keyLength = @keySize type
       crypto.pbkdf2 password, salt, @keyDerivationPass, keyLength, cb
     catch e
